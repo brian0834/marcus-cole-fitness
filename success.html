@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome — Marcus Cole Fitness</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300..900;1,9..40,300..700&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #0D0D0B;
+      color: #E8E0D0;
+      font-family: 'DM Sans', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    :root {
+      --accent: #C8FF00;
+      --bg: #0D0D0B;
+      --surface: #111110;
+      --surface2: #161614;
+      --text: #E8E0D0;
+      --muted: #888880;
+      --border: rgba(255,255,255,0.08);
+      --border-hi: rgba(255,255,255,0.14);
+    }
+
+    body::after {
+      content: ''; position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.035; pointer-events: none; z-index: 9999;
+    }
+
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: #0D0D0B; }
+    ::-webkit-scrollbar-thumb { background: #2A2A28; border-radius: 2px; }
+
+    .page { max-width: 900px; margin: 0 auto; padding: 0 24px 120px; }
+
+    /* Header */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 24px; max-width: 900px; margin: 0 auto;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo { font-family: 'Bebas Neue'; font-size: 22px; letter-spacing: .18em; color: var(--text); }
+    .logo span { color: var(--accent); }
+
+    /* Hero confirm */
+    .confirm-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.25); border-radius: 999px;
+      font-size: 11px; font-weight: 600; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--accent);
+    }
+    .confirm-badge svg { flex-shrink: 0; }
+
+    .hero-section {
+      padding: 72px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label { font-size: 11px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .hero-title { font-family: 'Bebas Neue'; font-size: clamp(52px, 9vw, 96px); line-height: .9; letter-spacing: .03em; color: var(--text); margin-bottom: 20px; }
+    .hero-title span { color: var(--accent); }
+    .hero-sub { font-size: 15px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 520px; }
+
+    /* Section headers */
+    .section-wrap { padding: 72px 0 0; }
+    .section-label { font-size: 10px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+    .section-title { font-family: 'DM Sans'; font-weight: 800; font-size: clamp(28px, 4vw, 42px); line-height: 1.0; letter-spacing: -.03em; color: var(--text); margin-bottom: 8px; }
+    .section-title span { color: var(--accent); }
+    .section-desc { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.7; max-width: 560px; margin-bottom: 40px; }
+
+    /* Week tabs */
+    .week-tabs { display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap; }
+    .week-tab {
+      padding: 8px 18px; background: transparent; border: 1px solid var(--border);
+      border-radius: 999px; font-family: 'DM Sans'; font-size: 12px; font-weight: 600;
+      letter-spacing: .06em; color: var(--muted); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .week-tab:hover { border-color: var(--border-hi); color: var(--text); }
+    .week-tab.active { background: var(--accent); border-color: var(--accent); color: #0D0D0B; }
+
+    /* Day card */
+    .day-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+    .day-card {
+      background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden;
+      transition: border-color .2s;
+    }
+    .day-card:hover { border-color: var(--border-hi); }
+    .day-header {
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .day-name { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+    .day-type { font-family: 'DM Sans'; font-weight: 700; font-size: 15px; color: var(--text); margin-top: 3px; }
+    .rest-badge { font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); padding: 4px 10px; background: rgba(255,255,255,.05); border: 1px solid var(--border); border-radius: 999px; }
+    .day-body { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .exercise-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+    .exercise-name { font-size: 13px; font-weight: 400; color: var(--text); line-height: 1.4; }
+    .exercise-sets { font-size: 11px; font-weight: 600; color: var(--accent); white-space: nowrap; flex-shrink: 0; font-family: 'Bebas Neue'; letter-spacing: .08em; font-size: 13px; }
+    .day-note { font-size: 11px; font-weight: 300; color: var(--muted); line-height: 1.55; padding-top: 10px; border-top: 1px solid var(--border); }
+
+    /* Rest card */
+    .rest-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px 24px; display: flex; align-items: center; gap: 16px;
+    }
+    .rest-icon { width: 36px; height: 36px; background: rgba(255,255,255,.04); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* Nutrition */
+    .macro-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
+    .macro-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; }
+    .macro-num { font-family: 'Bebas Neue'; font-size: 48px; line-height: 1; letter-spacing: .03em; color: var(--accent); }
+    .macro-label { font-size: 11px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+    .macro-note { font-size: 12px; font-weight: 300; color: var(--muted); margin-top: 6px; line-height: 1.5; }
+
+    .meal-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+    .meal-row {
+      display: flex; align-items: flex-start; gap: 20px;
+      padding: 20px; background: var(--surface2); border: 1px solid var(--border); border-radius: 14px;
+    }
+    .meal-time { font-family: 'Bebas Neue'; font-size: 22px; letter-spacing: .06em; color: var(--muted); min-width: 54px; flex-shrink: 0; }
+    .meal-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+    .meal-items { font-size: 13px; font-weight: 300; color: var(--muted); line-height: 1.6; }
+
+    /* Food lists */
+    .food-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 40px; }
+    .food-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 14px; padding: 24px; }
+    .food-card-title { font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 16px; }
+    .food-card-title.eat { color: var(--accent); }
+    .food-card-title.limit { color: #FF5C00; }
+    .food-item { font-size: 13px; font-weight: 300; color: var(--muted); padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,.05); display: flex; align-items: center; gap: 8px; }
+    .food-item:last-child { border-bottom: none; }
+    .dot-eat { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+    .dot-limit { width: 5px; height: 5px; border-radius: 50%; background: #FF5C00; flex-shrink: 0; }
+
+    /* Rules list */
+    .rule-list { display: flex; flex-direction: column; gap: 8px; }
+    .rule-row { display: flex; align-items: flex-start; gap: 14px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .rule-num { font-family: 'Bebas Neue'; font-size: 18px; color: rgba(255,255,255,.12); flex-shrink: 0; min-width: 24px; }
+    .rule-text { font-size: 14px; font-weight: 300; color: var(--muted); line-height: 1.65; }
+    .rule-text strong { color: var(--text); font-weight: 600; }
+
+    /* Print button */
+    .print-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 24px; background: transparent; border: 1px solid var(--border);
+      border-radius: 999px; font-family: 'DM Sans'; font-size: 12px; font-weight: 600;
+      letter-spacing: .08em; color: var(--muted); cursor: pointer;
+      transition: all .2s ease;
+    }
+    .print-btn:hover { border-color: var(--border-hi); color: var(--text); }
+
+    .divider { height: 1px; background: var(--border); margin: 64px 0 0; }
+
+    @media (max-width: 600px) {
+      .macro-row { grid-template-columns: 1fr 1fr; }
+      .food-cols { grid-template-columns: 1fr; }
+      .day-grid { grid-template-columns: 1fr; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: none; }
+    }
+    .fade-1 { animation: fadeUp .7s cubic-bezier(.25,.46,.45,.94) .1s both; }
+    .fade-2 { animation: fadeUp .7s cubic-bezier(.25,.46,.45,.94) .25s both; }
+    .fade-3 { animation: fadeUp .7s cubic-bezier(.25,.46,.45,.94) .4s both; }
+
+    @media print {
+      body::after { display: none; }
+      .print-btn { display: none; }
+      .week-tabs { display: none; }
+      .day-grid, .day-card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <div class="logo">MC<span>.</span>FITNESS</div>
+  <button class="print-btn" onclick="window.print()">
+    <svg width="14" height="14" viewBox="0 0 256 256" fill="currentColor"><path d="M224,152a8,8,0,0,1-8,8H192v40a8,8,0,0,1-8,8H72a8,8,0,0,1-8-8V160H40a8,8,0,0,1-8-8V104A32,32,0,0,1,64,72V40a8,8,0,0,1,8-8H184a8,8,0,0,1,8,8V72a32,32,0,0,1,32,32ZM80,72h96V48H80Zm96,112V160H80v24Zm32-80a16,16,0,0,0-16-16H64a16,16,0,0,0-16,16v40H64V152a8,8,0,0,1,8-8H184a8,8,0,0,1,8,8v8h16Z"/></svg>
+    Print / Save PDF
+  </button>
+</div>
+
+<div class="page">
+
+  <!-- Hero confirmation -->
+  <div class="hero-section fade-1">
+    <div class="confirm-badge" style="margin-bottom: 28px;">
+      <svg width="12" height="12" viewBox="0 0 256 256" fill="#C8FF00"><path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"/></svg>
+      Payment confirmed
+    </div>
+    <div class="hero-label">Welcome to the program</div>
+    <h1 class="hero-title">Your Plan<br />Starts <span>Now.</span></h1>
+    <p class="hero-sub">Everything you need is on this page — your full training schedule and nutrition guide. Bookmark it, print it, or save it as a PDF. Marcus will follow up within 24 hours to schedule your first check-in.</p>
+  </div>
+
+  <!-- ═══════════════════════════════
+       WORKOUT PROGRAM
+  ═══════════════════════════════ -->
+  <div class="section-wrap fade-2">
+    <div class="section-label">Training Program</div>
+    <h2 class="section-title">Weekly <span>Workout</span> Schedule</h2>
+    <p class="section-desc">4-day training split. Rotate through 4 weeks before repeating. Each week adds load or volume — progressive overload is the engine.</p>
+
+    <!-- Week tabs -->
+    <div class="week-tabs" id="weekTabs">
+      <button class="week-tab active" onclick="showWeek(1)">Week 1</button>
+      <button class="week-tab" onclick="showWeek(2)">Week 2</button>
+      <button class="week-tab" onclick="showWeek(3)">Week 3</button>
+      <button class="week-tab" onclick="showWeek(4)">Week 4</button>
+    </div>
+
+    <!-- Week 1 -->
+    <div id="week-1" class="day-grid">
+
+      <div class="day-card">
+        <div class="day-header">
+          <div><div class="day-name">Monday</div><div class="day-type">Upper Body — Push</div></div>
+        </div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Barbell Bench Press</span><span class="exercise-sets">4 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Incline Dumbbell Press</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Overhead Press (DB)</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Lateral Raise</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Tricep Rope Pushdown</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Overhead Tricep Extension</span><span class="exercise-sets">2 × 15</span></div>
+          <div class="day-note">Rest 2–3 min between compound sets. 60–90 sec on isolation.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <div><div class="day-name">Tuesday</div><div class="day-type">Lower Body — Squat Focus</div></div>
+        </div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Back Squat</span><span class="exercise-sets">4 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Romanian Deadlift</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Press</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Walking Lunges</span><span class="exercise-sets">3 × 12/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Curl (Machine)</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Calf Raises</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="day-note">Focus on depth and knee tracking on squats. Record your working weight.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header">
+          <div><div class="day-name">Wednesday</div><div class="day-type">Active Recovery</div></div>
+          <span class="rest-badge">Rest</span>
+        </div>
+        <div class="day-body">
+          <div class="day-note" style="border-top: none; padding-top: 0;">20–30 min low-intensity walk or light stretching. No lifting. Sleep 7–9 hours tonight — this is when you grow.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <div><div class="day-name">Thursday</div><div class="day-type">Upper Body — Pull</div></div>
+        </div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Pull-Ups (weighted if able)</span><span class="exercise-sets">4 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Barbell Row</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Seated Cable Row</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Face Pulls</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Barbell Curl</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hammer Curl</span><span class="exercise-sets">2 × 12</span></div>
+          <div class="day-note">Initiate every pull with your lats — not your arms. Control the negative.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <div><div class="day-name">Friday</div><div class="day-type">Lower Body — Hinge Focus</div></div>
+        </div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Conventional Deadlift</span><span class="exercise-sets">4 × 5</span></div>
+          <div class="exercise-row"><span class="exercise-name">Bulgarian Split Squat</span><span class="exercise-sets">3 × 8/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Glute Bridge (barbell)</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Extension</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Nordic Curl or GHR</span><span class="exercise-sets">3 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Ab Wheel Rollout</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="day-note">Deadlift is your heaviest lift of the week. Warm up properly — 3 ramp-up sets before working sets.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header">
+          <div><div class="day-name">Saturday</div><div class="day-type">Full Body Conditioning</div></div>
+        </div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Kettlebell Swing</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Push-Up (tempo 3–0–1)</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Goblet Squat</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">TRX or Ring Row</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Farmer's Carry</span><span class="exercise-sets">3 × 40m</span></div>
+          <div class="exercise-row"><span class="exercise-name">Plank Hold</span><span class="exercise-sets">3 × 45 sec</span></div>
+          <div class="day-note">Circuit style — 30 sec rest between exercises, 2 min between rounds. Keep intensity high.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header">
+          <div><div class="day-name">Sunday</div><div class="day-type">Full Rest</div></div>
+          <span class="rest-badge">Rest</span>
+        </div>
+        <div class="day-body">
+          <div class="day-note" style="border-top: none; padding-top: 0;">Full rest. Meal prep for the week. Hydrate. No structured exercise — let your nervous system recover completely.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Week 2 -->
+    <div id="week-2" class="day-grid" style="display:none;">
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Monday</div><div class="day-type">Upper Body — Push</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Barbell Bench Press</span><span class="exercise-sets">4 × 5 (+5 lbs)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Incline DB Press</span><span class="exercise-sets">3 × 10 (+5 lbs)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Overhead Press (DB)</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Lateral Raise</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Dips (weighted)</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Skull Crushers</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="day-note">Add 5 lbs to all pressing movements from Week 1.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Tuesday</div><div class="day-type">Lower Body — Squat Focus</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Back Squat</span><span class="exercise-sets">5 × 5 (+5 lbs)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Romanian Deadlift</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hack Squat</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Reverse Lunge</span><span class="exercise-sets">3 × 10/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Curl</span><span class="exercise-sets">4 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Standing Calf Raise</span><span class="exercise-sets">4 × 20</span></div>
+          <div class="day-note">Add one set to squat this week. Keep perfect form before adding load.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Wednesday</div><div class="day-type">Active Recovery</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">Walk, stretch, foam roll. 10 min mobility work on hip flexors and thoracic spine.</div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Thursday</div><div class="day-type">Upper Body — Pull</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Weighted Pull-Ups</span><span class="exercise-sets">4 × 5 (+weight)</span></div>
+          <div class="exercise-row"><span class="exercise-name">T-Bar Row</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Single-Arm DB Row</span><span class="exercise-sets">3 × 10/side</span></div>
+          <div class="exercise-row"><span class="exercise-name">Rear Delt Fly</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Incline Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Curl (high)</span><span class="exercise-sets">2 × 15</span></div>
+          <div class="day-note">Swap barbell row for T-Bar row this week. Focus on scapular retraction.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Friday</div><div class="day-type">Lower Body — Hinge Focus</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Conventional Deadlift</span><span class="exercise-sets">4 × 5 (+10 lbs)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Bulgarian Split Squat</span><span class="exercise-sets">4 × 8/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hip Thrust (barbell)</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Press (narrow)</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Seated Leg Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Crunch</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="day-note">Add 10 lbs to deadlift. Record your PR.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Saturday</div><div class="day-type">Conditioning</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Row Erg or Assault Bike</span><span class="exercise-sets">5 × 3 min</span></div>
+          <div class="exercise-row"><span class="exercise-name">Box Jump</span><span class="exercise-sets">4 × 5</span></div>
+          <div class="exercise-row"><span class="exercise-name">Sandbag Clean</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Battle Ropes</span><span class="exercise-sets">4 × 30 sec</span></div>
+          <div class="exercise-row"><span class="exercise-name">Sled Push</span><span class="exercise-sets">3 × 20m</span></div>
+          <div class="day-note">1 min rest between rounds. Intensity over speed.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Sunday</div><div class="day-type">Full Rest</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">Full rest. Review your week — note what felt heavy and what felt light. Adjust expectations for Week 3.</div></div>
+      </div>
+
+    </div>
+
+    <!-- Week 3 -->
+    <div id="week-3" class="day-grid" style="display:none;">
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Monday</div><div class="day-type">Upper — Heavy Push</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Barbell Bench Press</span><span class="exercise-sets">5 × 4 (heavy)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Fly (low to high)</span><span class="exercise-sets">4 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Arnold Press</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Lateral Raise (drop set)</span><span class="exercise-sets">3 × 12+8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Close-Grip Bench</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Tricep Dips</span><span class="exercise-sets">3 × failure</span></div>
+          <div class="day-note">Week 3 = heaviest loads. Push your 4-rep max on bench.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Tuesday</div><div class="day-type">Lower — Heavy Squat</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Back Squat</span><span class="exercise-sets">5 × 4 (heavy)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Front Squat</span><span class="exercise-sets">3 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Press (paused)</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Nordic Curl</span><span class="exercise-sets">3 × 5</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Extension</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Seated Calf Raise</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="day-note">Front squat will expose any mobility limitations — address them now.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Wednesday</div><div class="day-type">Active Recovery</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">You'll need this rest day. Legs and pressing will both be sore. Walk, stretch, hydrate aggressively.</div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Thursday</div><div class="day-type">Upper — Heavy Pull</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Weighted Pull-Ups</span><span class="exercise-sets">5 × 4</span></div>
+          <div class="exercise-row"><span class="exercise-name">Pendlay Row</span><span class="exercise-sets">4 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Lat Pulldown (wide)</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Cable Row (close grip)</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Face Pulls</span><span class="exercise-sets">4 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">EZ-Bar Curl</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="day-note">Pendlay rows are explosive — pull from the floor each rep. Keep your back horizontal.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Friday</div><div class="day-type">Lower — Heavy Deadlift</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Conventional Deadlift</span><span class="exercise-sets">5 × 3 (heavy)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Sumo Deadlift</span><span class="exercise-sets">3 × 5</span></div>
+          <div class="exercise-row"><span class="exercise-name">Single-Leg RDL</span><span class="exercise-sets">3 × 8/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hip Thrust</span><span class="exercise-sets">4 × 8 (heavy)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hamstring Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hanging Leg Raise</span><span class="exercise-sets">4 × 12</span></div>
+          <div class="day-note">This is your heaviest deadlift day of the cycle. Treat it like a test.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Saturday</div><div class="day-type">Conditioning</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Tire Flip</span><span class="exercise-sets">5 × 5</span></div>
+          <div class="exercise-row"><span class="exercise-name">Burpee Box Jump</span><span class="exercise-sets">4 × 8</span></div>
+          <div class="exercise-row"><span class="exercise-name">Trap Bar Carry</span><span class="exercise-sets">3 × 30m</span></div>
+          <div class="exercise-row"><span class="exercise-name">Slam Ball</span><span class="exercise-sets">4 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Sprint Intervals</span><span class="exercise-sets">6 × 30 sec</span></div>
+          <div class="day-note">Max effort day. This should feel hard. You're building a bigger engine.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Sunday</div><div class="day-type">Full Rest</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">Hardest week of the cycle is done. Full rest. You'll come back stronger for Week 4.</div></div>
+      </div>
+
+    </div>
+
+    <!-- Week 4 -->
+    <div id="week-4" class="day-grid" style="display:none;">
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Monday</div><div class="day-type">Upper — Deload Push</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Barbell Bench Press</span><span class="exercise-sets">3 × 5 (–20%)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Incline DB Press</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Overhead Press</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Lateral Raise</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Tricep Pushdown</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="day-note">Deload week — reduce weight by 20%, keep same reps. Your tendons and joints need this.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Tuesday</div><div class="day-type">Lower — Deload Squat</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Back Squat</span><span class="exercise-sets">3 × 5 (–20%)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Romanian Deadlift</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Press</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Leg Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Calf Raise</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="day-note">Deload. Move well, not heavy. Focus on perfect technique at lighter loads.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Wednesday</div><div class="day-type">Active Recovery</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">Light yoga or mobility work. 20 min walk. You're preparing for a new, heavier cycle starting Week 1 next month.</div></div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Thursday</div><div class="day-type">Upper — Deload Pull</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Pull-Ups (bodyweight)</span><span class="exercise-sets">3 × 6</span></div>
+          <div class="exercise-row"><span class="exercise-name">Barbell Row</span><span class="exercise-sets">3 × 8 (–20%)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Lat Pulldown</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Face Pulls</span><span class="exercise-sets">3 × 15</span></div>
+          <div class="exercise-row"><span class="exercise-name">Dumbbell Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="day-note">Light and clean. Deload doesn't mean lazy — every rep is intentional.</div>
+        </div>
+      </div>
+
+      <div class="day-card">
+        <div class="day-header"><div><div class="day-name">Friday</div><div class="day-type">Lower — Deload Deadlift</div></div></div>
+        <div class="day-body">
+          <div class="exercise-row"><span class="exercise-name">Conventional Deadlift</span><span class="exercise-sets">3 × 4 (–20%)</span></div>
+          <div class="exercise-row"><span class="exercise-name">Bulgarian Split Squat</span><span class="exercise-sets">3 × 8/leg</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hip Thrust</span><span class="exercise-sets">3 × 10</span></div>
+          <div class="exercise-row"><span class="exercise-name">Hamstring Curl</span><span class="exercise-sets">3 × 12</span></div>
+          <div class="exercise-row"><span class="exercise-name">Plank</span><span class="exercise-sets">3 × 60 sec</span></div>
+          <div class="day-note">Last lifting day of the cycle. Note your finishing weights — you'll beat them in the next cycle.</div>
+        </div>
+      </div>
+
+      <div class="day-card" style="border-color: rgba(255,255,255,0.05);">
+        <div class="day-header"><div><div class="day-name">Sat–Sun</div><div class="day-type">Full Rest</div></div><span class="rest-badge">Rest</span></div>
+        <div class="day-body"><div class="day-note" style="border-top:none;padding-top:0;">Weekend off. You've completed one full cycle. Rest both days, then restart at Week 1 with heavier working weights.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ═══════════════════════════════
+       NUTRITION GUIDE
+  ═══════════════════════════════ -->
+  <div class="section-wrap fade-3">
+    <div class="section-label">Nutrition Guide</div>
+    <h2 class="section-title">What To <span>Eat</span></h2>
+    <p class="section-desc">No tracking apps required. These are clear targets and rules that work for most body types. Marcus will adjust your specific numbers on your first check-in.</p>
+
+    <!-- Macro targets -->
+    <div class="macro-row">
+      <div class="macro-card">
+        <div class="macro-num">1g</div>
+        <div class="macro-label">Protein / lb bodyweight</div>
+        <div class="macro-note">Non-negotiable. Spread across 4–5 meals. Chicken, beef, eggs, fish, Greek yogurt.</div>
+      </div>
+      <div class="macro-card">
+        <div class="macro-num">40%</div>
+        <div class="macro-label">Carbs (of total calories)</div>
+        <div class="macro-note">Time around training. Oats, rice, sweet potato, fruit. Cut back on rest days.</div>
+      </div>
+      <div class="macro-card">
+        <div class="macro-num">25%</div>
+        <div class="macro-label">Fats (of total calories)</div>
+        <div class="macro-note">Avocado, olive oil, nuts, eggs. Never go below 50g — hormones depend on it.</div>
+      </div>
+    </div>
+
+    <!-- Daily meal plan -->
+    <div class="section-label" style="margin-bottom: 16px;">Sample Daily Meal Plan</div>
+    <div class="meal-list">
+      <div class="meal-row">
+        <div class="meal-time">7AM</div>
+        <div>
+          <div class="meal-name">Breakfast — Pre-Training</div>
+          <div class="meal-items">5 eggs scrambled + 1 cup oats with banana and almond butter<br />Black coffee or green tea. No sugar.</div>
+        </div>
+      </div>
+      <div class="meal-row">
+        <div class="meal-time">10AM</div>
+        <div>
+          <div class="meal-name">Pre-Workout Snack</div>
+          <div class="meal-items">1 cup Greek yogurt (plain, full-fat) + handful of blueberries + rice cake<br />Take this 60–90 min before training.</div>
+        </div>
+      </div>
+      <div class="meal-row">
+        <div class="meal-time">1PM</div>
+        <div>
+          <div class="meal-name">Post-Workout Meal</div>
+          <div class="meal-items">200g grilled chicken breast + 1.5 cups white rice + steamed broccoli<br />Eat within 60 min of finishing your session.</div>
+        </div>
+      </div>
+      <div class="meal-row">
+        <div class="meal-time">4PM</div>
+        <div>
+          <div class="meal-name">Afternoon Meal</div>
+          <div class="meal-items">Salmon (150–200g) or lean ground beef + sweet potato + mixed greens with olive oil<br />Largest carb window of the day after this point narrows.</div>
+        </div>
+      </div>
+      <div class="meal-row">
+        <div class="meal-time">7PM</div>
+        <div>
+          <div class="meal-name">Dinner</div>
+          <div class="meal-items">Steak or chicken thighs + roasted vegetables + 1 cup cottage cheese or eggs<br />Lower carbs here unless training in the evening.</div>
+        </div>
+      </div>
+      <div class="meal-row">
+        <div class="meal-time">9PM</div>
+        <div>
+          <div class="meal-name">Optional Nighttime</div>
+          <div class="meal-items">Casein protein shake or 200g cottage cheese + handful of nuts<br />Slow-digesting protein feeds muscle repair overnight.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Eat / Limit lists -->
+    <div class="section-label" style="margin-bottom: 16px;">Food Selection</div>
+    <div class="food-cols">
+      <div class="food-card">
+        <div class="food-card-title eat">Eat Freely</div>
+        <div class="food-item"><span class="dot-eat"></span>Chicken breast, turkey, lean beef</div>
+        <div class="food-item"><span class="dot-eat"></span>Salmon, tilapia, tuna, shrimp</div>
+        <div class="food-item"><span class="dot-eat"></span>Whole eggs and egg whites</div>
+        <div class="food-item"><span class="dot-eat"></span>Greek yogurt, cottage cheese</div>
+        <div class="food-item"><span class="dot-eat"></span>White rice, oats, sweet potato</div>
+        <div class="food-item"><span class="dot-eat"></span>Broccoli, spinach, zucchini, kale</div>
+        <div class="food-item"><span class="dot-eat"></span>Berries, bananas, apples, oranges</div>
+        <div class="food-item"><span class="dot-eat"></span>Avocado, olive oil, nuts, seeds</div>
+        <div class="food-item"><span class="dot-eat"></span>Water, black coffee, green tea</div>
+      </div>
+      <div class="food-card">
+        <div class="food-card-title limit">Limit or Remove</div>
+        <div class="food-item"><span class="dot-limit"></span>Processed deli meats and sausages</div>
+        <div class="food-item"><span class="dot-limit"></span>Sugary cereals, pastries, white bread</div>
+        <div class="food-item"><span class="dot-limit"></span>Soda, fruit juice, energy drinks</div>
+        <div class="food-item"><span class="dot-limit"></span>Deep-fried anything</div>
+        <div class="food-item"><span class="dot-limit"></span>Fast food more than once per week</div>
+        <div class="food-item"><span class="dot-limit"></span>Alcohol (kills recovery significantly)</div>
+        <div class="food-item"><span class="dot-limit"></span>Flavored yogurts and granola bars</div>
+        <div class="food-item"><span class="dot-limit"></span>Seed oils (canola, vegetable, soybean)</div>
+        <div class="food-item"><span class="dot-limit"></span>Late-night carb binges</div>
+      </div>
+    </div>
+
+    <!-- Rules -->
+    <div class="section-label" style="margin-bottom: 20px; margin-top: 48px;">Non-Negotiable Rules</div>
+    <div class="rule-list">
+      <div class="rule-row">
+        <div class="rule-num">01</div>
+        <div class="rule-text"><strong>Hit your protein every day.</strong> Everything else is secondary. If you only do one thing right, make it this. 1g per lb of bodyweight, minimum.</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-num">02</div>
+        <div class="rule-text"><strong>Drink at least 3 litres of water daily.</strong> More on training days. Dehydration tanks performance and recovery faster than almost anything else.</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-num">03</div>
+        <div class="rule-text"><strong>Sleep 7–9 hours.</strong> This is not optional. No supplement, no training method, and no amount of protein compensates for poor sleep. Your body builds muscle while you sleep.</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-num">04</div>
+        <div class="rule-text"><strong>Eat within 60 minutes after training.</strong> Post-workout is your highest insulin sensitivity window. Use it — protein and carbs here go directly toward recovery.</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-num">05</div>
+        <div class="rule-text"><strong>Don't skip meals to "save calories."</strong> Undereating stalls progress and leads to muscle loss. Eat your full targets every day, including rest days.</div>
+      </div>
+      <div class="rule-row">
+        <div class="rule-num">06</div>
+        <div class="rule-text"><strong>Keep a training log.</strong> Write down every weight, every set, every rep. If you're not tracking, you're guessing. Progress is a pattern — you can't see the pattern without data.</div>
+      </div>
+      <div class="rule-row" style="border-bottom: none;">
+        <div class="rule-num">07</div>
+        <div class="rule-text"><strong>Message Marcus after every session.</strong> One line — what you lifted, how it felt. He adjusts your plan based on this. The feedback loop is the program.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="divider" style="margin-bottom: 56px;"></div>
+
+  <!-- Footer note -->
+  <div style="text-align: center; padding-bottom: 40px;">
+    <div style="font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: #3E3E3A; margin-bottom: 12px;">MC<span style="color:#C8FF00;">.</span>FITNESS</div>
+    <p style="font-size: 13px; font-weight: 300; color: #888880; line-height: 1.7; max-width: 440px; margin: 0 auto;">Questions about the program? Reply to your confirmation email or message Marcus directly. Your first check-in call will be scheduled within 24 hours.</p>
+  </div>
+
+</div>
+
+<script>
+function showWeek(n) {
+  for (let i = 1; i <= 4; i++) {
+    document.getElementById('week-' + i).style.display = i === n ? 'grid' : 'none';
+  }
+  document.querySelectorAll('.week-tab').forEach((tab, idx) => {
+    tab.classList.toggle('active', idx + 1 === n);
+  });
+}
+</script>
+</body>
+</html>
