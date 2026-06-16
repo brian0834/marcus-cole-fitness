@@ -569,7 +569,7 @@ const Services = () => {
    Dark cinematic bg. Stats. Steps 01–05. DM Sans 800.
    ════════════════════════════════════════════════════════════ */
 const steps = [
-{ n: '01', title: 'Discovery Call', desc: "We dive into your goals, current challenges, and lifestyle to create a clear, strategic direction forward." },
+{ n: '01', title: 'Sign Up Online', desc: "Purchase your plan, fill out a short intake form, and you're in. No calls, no waiting — everything happens online." },
 { n: '02', title: 'Personalised Plan', desc: "A tailored training and nutrition strategy built around your lifestyle and targets." },
 { n: '03', title: 'Guided Training', desc: "Structured training sessions with expert feedback, consistent support, and real accountability." },
 { n: '04', title: 'Progress Tracking', desc: "We closely monitor performance, body metrics, and make smart, data-driven adjustments." },
@@ -786,12 +786,12 @@ const Pricing = () => {
    38/62 split. Smooth accordion. DM Sans 800.
    ════════════════════════════════════════════════════════════ */
 const faqs = [
-{ q: 'How does getting started work?', a: "Book a free 20-minute discovery call. We cover your goals, current fitness level, schedule, and any limitations. If we're a fit, your plan is ready within 48 hours." },
-{ q: 'Do I need a gym membership?', a: "For in-person training, yes — we train at two gyms in San Francisco. For online coaching, I'll build your program around whatever equipment you have access to, including home setups." },
+{ q: 'How does getting started work?', a: "Purchase your plan online — that's it. You'll get instant access to your full training and nutrition program the moment payment goes through. No calls, no waiting." },
+{ q: 'Do I need a gym membership?', a: "Not necessarily. Your program is built around whatever equipment you have access to — full gym, home setup, or minimal equipment. Just let us know in your intake form." },
 { q: "I'm just starting out, is that okay?", a: "Beginners make some of the fastest progress. There's no base level required. We start where you are and build from there — no assumptions, no ego." },
-{ q: "What's the difference between online and in-person?", a: "In-person means we train together 4 days a week with real-time coaching. Online is fully remote with weekly check-ins, form reviews, and daily messaging access. Both get the same level of programming." },
-{ q: 'Do you offer flexible scheduling?', a: "For in-person sessions, we lock in a recurring time slot that works for your calendar. Online clients train on their own schedule — the program is designed to work around your life." },
-{ q: 'Can I pause or cancel at any time?', a: "Yes. Month-to-month, no contracts. Give 7 days notice to pause or cancel. I'd rather you come back when you're ready than feel locked in." }];
+{ q: 'How does the coaching work if it\'s fully online?', a: "Everything runs through messaging. You get a custom program, weekly check-ins, form reviews via video, and daily messaging access. You train on your own schedule — we handle the programming and adjustments." },
+{ q: 'Do you offer flexible scheduling?', a: "Yes — 100%. Online coaching means you train whenever works for you. The program is designed around your life, not a fixed time slot." },
+{ q: 'Can I pause or cancel at any time?', a: "Yes. Month-to-month, no contracts. Give 7 days notice to pause or cancel. No questions asked." }];
 
 
 const FItem = ({ q, a, i, vis }) => {
@@ -852,7 +852,7 @@ const FAQ = () => {
                 Everything<br />You Need<br />To Know
               </h2>
               <p style={{ ...reveal(vis, 160), fontSize: '14px', fontWeight: 300, color: '#6E6B66', lineHeight: 1.7 }}>
-                Still have questions? Book a free call and ask directly.
+                Still have questions? Message directly — no calls needed.
               </p>
             </div>
           </div>
@@ -1039,7 +1039,7 @@ const Intro = () => {
           color: 'rgba(232,224,208,0.55)', marginBottom: '20px',
           animation: 'introFadeUp 0.9s cubic-bezier(0.25,0.46,0.45,0.94) 0.3s both',
         }}>
-          Personal Trainer &nbsp;·&nbsp; San Francisco
+          Online Personal Coach &nbsp;·&nbsp; Worldwide
         </div>
         <h1 style={{
           fontFamily: 'Bebas Neue', fontSize: 'clamp(80px, 12vw, 152px)', lineHeight: 0.88,
